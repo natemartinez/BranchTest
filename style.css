@@ -1,0 +1,24 @@
+body{
+    background-color: rgb(30, 49, 49);
+}
+
+#cont-btn{
+    background-color: antiquewhite;
+}
+
+.disappear{
+    display: none;
+}
+.active{
+    display: flex!important;
+}
+
+/*choice difficulty classes*/
+.easy{
+    background-color: lightgreen;
+    color: white;
+}
+.hard{
+    background-color: indianred;
+    color: white;
+}
