@@ -19,21 +19,43 @@ session_start();
 </head>
 
 <body>
+        <button class='active' id='start-btn'>Start</button>
+
         <div class='choice-div disappear'>
-            <p id='Main-text'></p>
-            <button id='choice-0' class='choice-btn'>Choice 1</button>
-            <button id='choice-1' class='choice-btn'>Choice 2</button>
-            <button id='choice-2' class='choice-btn'>Choice 3</button>
-            <button id='choice-3' class='choice-btn'>Choice 4</button>
-            <button class='submit-btn disappear'>Submit</button>
+            <p id='main-text'></p>
+            <button id='choice-0' class='choice-btn not-clicked'>Choice 1</button>
+            <button id='choice-1' class='choice-btn not-clicked'>Choice 2</button>
+            <button id='choice-2' class='choice-btn not-clicked'>Choice 3</button>
+            <button id='choice-3' class='choice-btn not-clicked'>Choice 4</button>
+            <button id='move-btn' class='choice-btn'>Move on</button>
+            <button class='disappear' id='submit-btn'>Submit</button>
         </div>
 
-        <div class='combat-div'>
-
+        <div class='container'>
+         <div class='result-div disappear'>
+            <h2 id='result-text'></h2>
+            <p id='result-info'></p>
+            <button class='disappear' id='cont-btn'>Continue</button>
+         </div>
+         <div class='move-notice disappear'>
+            <h2>Are you sure you want to move on?</h2>
+            <div>
+                <button id='no-btn'>No</button>
+                <button id='yes-btn'>Yes</button>
+            </div>
+         </div>
         </div>
-   
-        <div class='info-div'>
-            <button class='active' id='cont-btn'>Continue</button>
+
+        <div class='combat-div disappear'>
+          <div class='enemy-div'>
+            
+          </div>
+          <div class='choices'>
+            <button>Attack</button>
+            <button>Item</button>
+            <button>Escape</button>
+            <button>Analysis</button>
+          </div>
         </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
