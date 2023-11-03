@@ -43,12 +43,13 @@ class Item {
         this.img = img;
     }
 };
+
 const Dice = new Item('Dice', 'Outcome', 'Outcome', 'Common');//item randomly chooses in battle
 const Stick = new Item('Stick','Attack','Health', 'Common');
 const Shirt = new Item('Shirt','Gear','Armor','Common');
 const MedKit = new Item('Med-Kit', 'Support','Health','Common');
 
-const Baddie = new Enemy('Baddie', 1, {attack:10,health:20});
+const Baddie = new Enemy('Baddie', 1, {attack:5,health:20});
 
 class BattleEvent{
     constructor(type, level, enemies){
@@ -68,7 +69,7 @@ class SearchEvent{
     // choices will be iterated to be displayed
 }
 
-const LevelOneBattle = new BattleEvent('1.1',[Baddie, Baddie]);
+const LevelOneBattle = new BattleEvent('battle','1.1',[Baddie, Baddie]);
 
 //Every action has properties that determine:
 // - What it will do
@@ -84,23 +85,43 @@ const Levels = [LevelOneSearch, LevelOneBattle];
 
 // Use Levels[] to save on LocalStorage
 
-const continueBtn = $('#cont-btn');
+const startBtn = $('#start-btn');
 const choiceDiv = $('.choice-div');
 const choiceBtn = $('.choice-btn');
-const submitBtn = $('.submit-btn');
+const submitBtn = $('#submit-btn');
+const continueBtn = $('#cont-btn');
+const moveBtn = $('#move-btn');
+const noBtn = $('#no-btn');
+const yesBtn = $('#yes-btn');
 //
 
 //This function will trigger choices for battle and searching
 // Have to find a way to set these choices automatically
 let i = 0;
 
+let chosenChoice = '';
+let currentChoices = [];
+
 choiceBtn.click(function(){
     submitBtn.addClass('active');
     submitBtn.removeClass('disappear');
+    let selectedChoice = $(this).text();
+    chosenChoice = selectedChoice;
+
+    // if the button clicked is the 'move-on', then hide the submit button
+    
+    // if element has not-clicked, then just change that specific element
+    // change the rest to clicked
+    if($(this).hasClass('not-clicked')){
+      $(this).toggleClass('clicked not-clicked');
+      $(this).siblings('.choice-btn').removeClass('clicked');  
+      $(this).siblings('.choice-btn').addClass('not-clicked');  
+    };
+    
     // Activate animation that shows an annoucement of the probability and result
     // if choice succeeds
 });
-continueBtn.click(function(){
+startBtn.click(function(){
 // This button's function will iterate through the levels one at a time
 // For now, I just want to return each event one at a time
    setChoices(Levels[i]);
@@ -109,9 +130,37 @@ continueBtn.click(function(){
    choiceDiv.toggleClass('active disappear');
 });
 submitBtn.click(function(){
+    // Removes choice that was clicked, as well as the submit button
     $(this).toggleClass('disappear active');
     continueBtn.toggleClass('active disappear');
+    let i = 0;
+    selectChoice(chosenChoice, currentChoices);
+    $(this).addClass('disappear');
+    $('.clicked').addClass('disappear');
+    i++;
+    // create a function that finds the object that matches the button's text
 });
+continueBtn.click(function(){
+    $('.result-div').toggleClass('disappear active');
+    $(this).toggleClass('disappear active');
+    $('.choice-btn').removeClass('no-click')
+})
+moveBtn.click(function(){
+     // if the next level is a battle then remove choice-div
+    // and add battle-div
+    // give warning to move on, if they decline, remove warning and cancel operation
+    $('#submit-btn').addClass('disappear');
+    $('#submit-btn').removeClass('active');
+    $('.move-notice').addClass('active');
+})
+noBtn.click(function(){
+    $('.move-notice').removeClass('active');
+   
+})
+yesBtn.click(function(){
+    $('.move-notice').addClass('disappear');
+    nextEvent(Levels[i]);
+})
 
 
 function setChoices(event){
@@ -168,16 +217,14 @@ function displayChoices(choices){
     // choice in the 'choices' array
       let name = choices[i].choiceName;
       let difficulty = choices[i].choiceChance;
-      let selectedChoice = '#choice-' + i;
+      let choiceText = '#choice-' + i;
 
-      $(selectedChoice).text(name);
-      $(selectedChoice).addClass(difficulty);
+      $(choiceText).text(name);
+      $(choiceText).addClass(difficulty);
+      currentChoices.push(choices[i]);
     }
-    // Using iteration, add:
-    /* - Choice name
-       - Choice class 
-         - bkgrd color based on choice chance
-    */
+
+    // How am I going to send choices to choiceResult?
 
     // Delete choices that were chosen
     // Use a variable to keep track of the selected choices -- Could probably do that as an event Listener
@@ -185,17 +232,109 @@ function displayChoices(choices){
     
 };
 
-function choiceResult(choice){
-    // This function will come to the result of the button that was clicked
-    // Random out of 100
-    // Assign the probability here, based on choiceChance
-  let result = '';
-
-
-   
+function selectChoice(selected, choiceArray){
+  //  Finds object that matches the selected button texts
+  for(let i=0; i < choiceArray.length;i++){
+     if(selected === choiceArray[i].choiceName){
+      let chosenObj = choiceArray[i];
+      choiceResult(chosenObj);
+    } else{
+        console.log('Not it chief');
+    }
+ }
+  
 }
 
-function nextStage(){
+function choiceResult(choiceObj){
+    let random = Math.floor(Math.random() * 100);
+    let result = '';
+    console.log(choiceObj);
+
+    if(choiceObj.choiceChance == 'easy'){
+        if(random < 99){
+            result = 'Success';
+            success(choiceObj.result);
+        } else{
+            result = 'Fail';
+            
+        }
+    } else if(choiceObj.choiceChance == 'hard'){
+        if(random < 65){
+            result = 'Fail'
+        }else{
+            result = 'Success';
+            success(choiceObj.result);
+        }
+    }
+
+    function success(result){
+       // add xp and item -- all xp's is 15
+       $('#result-info').text('+15 XP' + '+' + result.name);
+        console.log(result)
+    }
+    
+    //outputs the result
+    //makes other elements before it non-clickable until continue button is clicked
+    $('.result-div').toggleClass('active disappear');
+    $('.result-div').addClass('fade-div-in');
+    $('.choice-btn').addClass('no-click')
+    
+    $('#result-text').text(result);
+    
+    // Sense when choice has been clicked
+
+    // function that outputs results based on success and fail
+    // Success - Save new item into inventory
+    // Fail - Nothing
+}
+
+function nextEvent(nextLevel){
+
+    // Senses what type of level is next (Search or battle)
+    if(nextLevel.type == 'battle'){
+        // clear out all previous elements off-screen
+        $('.move-notice').addClass('disappear');
+        $('.move-notice').removeClass('active');
+        choiceDiv.addClass('disappear');
+        choiceDiv.removeClass('active');
+        $('.combat-div').addClass('active');
+
+        combatStart(nextLevel);
+
+    }
+}
+
+function combatStart(currentStage){
+    // In the future, put in a alert
+    let enemies = currentStage.enemies;
+    // Steps:
+    /* 
+    */
+   const enemyInfoBox = $('.enemy-div'); 
+
+   const enemyNameBox = $('#enemy-name');
+   const enemyLvlBox = $('#enemy-lvl');
+   const enemyHpBox = $('#enemy-hp');
+   const enemyInfo = "<div><p id='enemy-name'></p><br><p id='enemy-lvl'></p><br><p id='enemy-hp'></p></div>";
+  
+   for(let i=0; i<enemies.length;i++){
+    enemyInfoBox.append(enemyInfo);
+
+    let enemyName = enemies[i].name;
+    let enemyLvl = enemies[i].level;
+    let enemyHp = enemies[i].stats.health;
+
+
+    enemyNameBox.append(enemyName); 
+    enemyLvlBox.text(enemyLvl); 
+    enemyHpBox.text(enemyHp);
+   }
+}
+
+function enemyLogic(enemy){
+    // Damage dealt with be in correlation of their attack stat
+    // Cause slashing image and sound to come out on screen
+    // and cause user's hp to drop
 
 }
 /* 
