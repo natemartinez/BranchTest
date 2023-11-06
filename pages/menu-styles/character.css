@@ -1,0 +1,118 @@
+#char-menu{
+    display: flex;
+    column-gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    background-color:#495057;
+}
+#back-arrow{
+    width: 3em;
+    height: 2em;
+    margin-right: 0.5em;
+}
+.char-links button{
+    width: 3.2em;
+    height: 2.5em;
+    background-color: midnightblue;
+    border: 1px solid midnightblue;
+    font-size: 2em;
+    color: white;
+}
+
+.content-deactive{
+    display: none !important;
+}
+#char-wrapper{
+    padding: 1em;
+}
+
+#bio-content{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+#bio-stats{
+    display: inline-flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#bio-stats p{
+    font-size: 2em;
+}
+#bio-history{
+    width: 100%;
+    border: 3px solid black;
+    height: 35em;
+    margin-top: 5em;
+}
+
+#profile{
+    width: 10em;
+    height: 10em;
+    background: none;
+    border: 1px solid black;
+}
+
+#dna-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 500;
+}
+.dna-div{
+    display: flex;
+    align-items: center;
+}
+
+#dna-stats{
+    display: flex;
+    column-gap: 5em;
+}
+#left-div{
+    display: flex;
+    flex-direction: column;
+}
+#right-div{
+    display: flex;
+    flex-direction: column;
+}
+
+
+#brain-div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#brain{
+    width: 10em;
+}
+#brain-title{
+    display: flex;
+    flex-direction: row;
+    column-gap: 5em;
+}
+#intro-img{
+    width: 5em;
+    padding-top: 1.5em;
+}
+#extro-img{
+    width: 6.5em;
+}
+#earlybird-img{
+    width: 6em;
+}
+#nightowl-img{
+    width: 6em;
+}
+#snowflake-img{
+    width: 5em;
+    margin-bottom: 0.3em;
+}
+#flame-img{
+    width: 5em;
+}
+
+#stats-content p{
+    font-size: 2em;
+}

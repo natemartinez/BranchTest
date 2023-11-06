@@ -1,0 +1,33 @@
+body{
+    background-color: lightslategray;
+}
+
+#back-arrow{
+    position: relative;
+    width: 5em;
+}
+
+.inv-wrap{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 1em;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 1em;
+}
+.item{
+    background-color: aliceblue;
+}
+
+.info-box{
+    min-width: 425px;
+    max-width: 700px;
+    min-height: 20em;
+    background-color: aliceblue;
+    border: 2px solid black;
+    margin: 0 auto;
+    padding: 1em;
+}

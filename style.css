@@ -200,3 +200,212 @@ body{
 .combat-div{
     color: white;
 }
+
+/*style code to old cyoa file*/
+body{
+    background-color: #495057;
+}
+a{
+    color: whitesmoke;
+}
+
+a:hover{
+    text-decoration: none;
+    color: rgb(67, 67, 234);
+}
+
+.hud-menu{
+    display: flex;
+    column-gap: 1em;
+}
+
+.hud-div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+}
+.hud-img{
+    width: 1.5em;
+    margin-right: 0.5em;
+}
+
+#level-circle{
+    position: relative;
+    z-index: 1;
+    width: 4em;
+}
+#level-div p{
+    position: relative;
+    z-index: 2;
+    margin-top: -1.8em;
+    margin-left: 0.7em;
+    font-size: 2em;
+    color: white;
+}
+
+#hud-heart{
+    
+}
+#hud-energy{
+    
+}
+.progress{
+    width: 9em;
+}
+
+
+.game-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap:2.5em;
+}
+.game-div p{
+    font-size: 1.5em;
+    padding: 2em;
+    text-align: center;
+    color: white;
+}
+.game-btn{
+    width: 12em;
+    border: 2px transparent;
+    border-radius: 10px;
+    height:5em;
+    font-size: 25px;
+}
+
+
+.test-btn{
+    width: 15em;
+    height: 5em;
+    border-radius: 10px;
+    background-color: #242235;
+    border: 2px;
+    color: white;
+    display: none;
+}
+.test-btn:hover{
+    cursor: pointer;
+}
+.test-btn:focus{
+    background-color: antiquewhite;
+    color: #242235;
+    transition: 0.6s;
+}
+
+.question-btn{
+    width: 6em;
+    height: 2em;
+    border-radius: 10px;
+    font-size: 2em;
+    background-color: #242235;
+    border: 2px;
+    color: whitesmoke;
+    filter: drop-shadow(2px 4px 6px black);
+}
+.question-btn:hover{
+    background-color: whitesmoke;
+    color: #242235;
+    transition: 0.7s;
+    cursor: pointer;
+}
+#begin-btn{
+    display: block;
+}
+#next-btn{
+    display: none;
+}
+#back-btn{
+    display: none;
+}
+#submit-btn{
+    display: none;
+}
+
+
+.menu{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 2em;
+    background-color: black;
+    z-index: 1;
+    font-size: 2.5em;
+    padding: 0.2em;
+}
+.main-menu{
+    position: fixed;
+    height: 0%;
+    width: 100%;
+    bottom: 0;
+    z-index: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: 0.5s;
+    font-size: 2.5em;
+}
+.main-menu-active{
+    display: flex;
+    z-index: 2;
+    height: 100%;
+    row-gap: 1em;
+}
+.main-menu a{
+    color:transparent;
+}
+
+.main-menu-active a{
+    color: white;
+}
+.main-menu-active a:hover{
+    color:rgb(39, 39, 223);
+}
+
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: absolute; /* Sit on top of the screen */
+    z-index: 2; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+  

@@ -1,0 +1,23 @@
+body{
+    background-color: lightslategray;
+}
+
+#back-arrow{
+    width: 3em;
+    height: 2em;
+    margin-right: 0.5em;
+}
+
+.goal-wrap ul{
+    list-style-type: none;
+}
+
+.goal-item{
+    display: flex;
+    
+}
+
+input[type=checkbox]{
+    width: 1.5em;
+    height: 1.5em;
+}

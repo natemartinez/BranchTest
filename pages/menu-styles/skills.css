@@ -1,0 +1,49 @@
+body{
+    background-color: lightslategrey;
+}
+
+#back-arrow{
+    position: relative;
+    width: 5em;
+}
+
+
+.skill-wrap{
+    display: flex;
+    flex-direction: column;
+    background-color: lightslategrey;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1em;
+    row-gap: 5em;
+    color:white;
+}
+.skill-wrap button{
+    background: none;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.skills-box{
+    display: grid;
+    padding: 1em;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1em; 
+}
+
+.info-wrap{
+    width: 20em;
+    height: 10em;    
+    position: relative;
+    margin: 0 auto;
+}
+.skill-info-box{
+    background-color: black;
+    opacity: 0.5;
+    position: fixed;
+    bottom: 10px;
+    width: 20em;
+    height: 8em;
+    border-radius:10px;
+}
