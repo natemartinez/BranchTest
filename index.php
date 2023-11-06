@@ -1,6 +1,17 @@
 <?php
 session_start();
+include 'db.php';
+
+$query = "SELECT * FROM stats";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Query failed: " . mysqli_error($conn));
+}
+
+
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -19,6 +30,12 @@ session_start();
 </head>
 
 <body>
+        <div class='hud'>
+          <p>Level</p>
+          <p>HP</p>
+          <p>SP</p>
+        </div>
+
         <button class='active' id='start-btn'>Start</button>
 
         <div class='choice-div disappear'>
