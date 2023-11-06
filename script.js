@@ -21,16 +21,18 @@
 // Must receive stats from test or database using fetch()
 // The keys must be strings
 let userStats = {
+    
     'str': 2,
     'per': 1,
     'agi': 3
 };
   // This object will hold the current event(Battle, Search)
 class Enemy{
-    constructor(name, level, stats){
+    constructor(name, level, stats, img){
         this.name = name;
         this.level = level;
-        this.stats = stats
+        this.stats = stats;
+        this.img = img;
     } 
     // Every enemy instance will have their own unique properties
 }
@@ -49,7 +51,7 @@ const Stick = new Item('Stick','Attack','Health', 'Common');
 const Shirt = new Item('Shirt','Gear','Armor','Common');
 const MedKit = new Item('Med-Kit', 'Support','Health','Common');
 
-const Baddie = new Enemy('Baddie', 1, {attack:5,health:20});
+const Baddie = new Enemy('Baddie', 1, {attack:5,health:20}, 'images/dabber.png');
 
 class BattleEvent{
     constructor(type, level, enemies){
@@ -162,7 +164,6 @@ yesBtn.click(function(){
     nextEvent(Levels[i]);
 })
 
-
 function setChoices(event){
    let curChoices = Object.keys(event.choices).length; 
    let choiceArray = [];
@@ -256,11 +257,12 @@ function choiceResult(choiceObj){
             success(choiceObj.result);
         } else{
             result = 'Fail';
-            
+            fail();
         }
     } else if(choiceObj.choiceChance == 'hard'){
         if(random < 65){
-            result = 'Fail'
+            result = 'Fail';
+            fail();
         }else{
             result = 'Success';
             success(choiceObj.result);
@@ -270,7 +272,9 @@ function choiceResult(choiceObj){
     function success(result){
        // add xp and item -- all xp's is 15
        $('#result-info').text('+15 XP' + '+' + result.name);
-        console.log(result)
+    }
+    function fail(){
+       $('#result-info').text('You found nothing');
     }
     
     //outputs the result
@@ -307,35 +311,40 @@ function nextEvent(nextLevel){
 function combatStart(currentStage){
     // In the future, put in a alert
     let enemies = currentStage.enemies;
-    // Steps:
-    /* 
-    */
-   const enemyInfoBox = $('.enemy-div'); 
+    const enemyInfoBox = $('.enemy-div');
 
-   const enemyNameBox = $('#enemy-name');
-   const enemyLvlBox = $('#enemy-lvl');
-   const enemyHpBox = $('#enemy-hp');
-   const enemyInfo = "<div><p id='enemy-name'></p><br><p id='enemy-lvl'></p><br><p id='enemy-hp'></p></div>";
-  
-   for(let i=0; i<enemies.length;i++){
+    console.log()
+
+   for(let i=0;i<enemies.length;i++){
+    const enemyInfo = "<div class='enemy-info'><img src='" + enemies[i].img + "' class='enemy-img' '><div><p id='enemy-name-" +
+     [i] + "'></p><br><p id='enemy-lvl-" + [i] + "'></p><br><p id='enemy-hp-" + [i] + "'></p></div></div>";
     enemyInfoBox.append(enemyInfo);
-
-    let enemyName = enemies[i].name;
-    let enemyLvl = enemies[i].level;
-    let enemyHp = enemies[i].stats.health;
-
-
-    enemyNameBox.append(enemyName); 
-    enemyLvlBox.text(enemyLvl); 
-    enemyHpBox.text(enemyHp);
    }
+   addEnemies(enemies);
 }
+
+function addEnemies(enemyObject){
+   for(let i=0; i<enemyObject.length;i++){
+    const enemyNameBox = $('#enemy-name-' + [i]);
+    const enemyLvlBox = $('#enemy-lvl-' + [i]);
+    const enemyHpBox = $('#enemy-hp-' + [i]); 
+    const enemyImgBox = $('#enemy-img-' + [i]); 
+
+     enemyNameBox.text(enemyObject[i].name);
+     enemyLvlBox.text('Level ' + enemyObject[i].level);
+     enemyHpBox.text('HP ' + enemyObject[i].stats.health);
+     
+     //enemyImgBox.src = 'images/dabbers.png';
+   }
+   
+}
+
 
 function enemyLogic(enemy){
     // Damage dealt with be in correlation of their attack stat
     // Cause slashing image and sound to come out on screen
     // and cause user's hp to drop
-
+    // user's hp drop = enemy's attack stat
 }
 /* 
     Battle Sequence:
