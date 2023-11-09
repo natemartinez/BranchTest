@@ -1,15 +1,8 @@
 <?php
-session_start();
 include 'db.php';
+session_start();
 
-$query = "SELECT * FROM stats";
-$result = mysqli_query($conn, $query);
-
-if (!$result) {
-    die("Query failed: " . mysqli_error($conn));
-}
-
-
+//echo $allStats;
 ?>
 
 <!DOCTYPE html>
@@ -30,25 +23,29 @@ if (!$result) {
 </head>
 
 <body>
-        <div class='hud'>
-          <p>Level</p>
-          <p>HP</p>
-          <p>SP</p>
-        </div>
+   <div class='hud-menu'>
+       <div id='level-div'>
+        <img id='level-circle' src="icons/level-circle.png" alt="black circle">
+        <p>1</p>
+       </div>
+      
+       <p>HP</p>
+       <p>SP</p>
+   </div>
 
-        <button class='active' id='start-btn'>Start</button>
+    <button class='active' id='start-btn'>Start</button>
 
-        <div class='choice-div disappear'>
+    <div class='choice-div disappear'>
             <p id='main-text'></p>
             <button id='choice-0' class='choice-btn not-clicked'>Choice 1</button>
             <button id='choice-1' class='choice-btn not-clicked'>Choice 2</button>
             <button id='choice-2' class='choice-btn not-clicked'>Choice 3</button>
             <button id='choice-3' class='choice-btn not-clicked'>Choice 4</button>
             <button id='move-btn' class='choice-btn'>Move on</button>
-            <button class='disappear' id='submit-btn'>Submit</button>
-        </div>
+            <button class='disappear' id='accept-btn'>Accept</button>
+    </div>
 
-        <div class='container'>
+    <div class='container'>
          <div class='result-div disappear'>
             <h2 id='result-text'></h2>
             <p id='result-info'></p>
@@ -61,9 +58,9 @@ if (!$result) {
                 <button id='yes-btn'>Yes</button>
             </div>
          </div>
-        </div>
+    </div>
 
-        <div class='combat-div disappear'>
+    <div class='combat-div disappear'>
           <div class='enemy-div'>
             
           </div>
@@ -73,10 +70,10 @@ if (!$result) {
             <button>Escape</button>
             <button>Analysis</button>
           </div>
-        </div>
+    </div>
 
-        <div class='menu text-center'>
-      <a id='open-menu' href="javascript:void(0)">Open Menu</a>
+    <div class='menu text-center'>
+          <a id='open-menu' href="javascript:void(0)">Open Menu</a>
     </div>
 
     <div class='main-menu'>
@@ -94,11 +91,11 @@ if (!$result) {
         <a href="pages/goals.php">Goals</a>
         </div>                           
         <div class='menu-div'>
-        <a href="pages/settings.php">Settings</a>
+          <button id='save-btn' href="pages/settings.php">Save</button>
         </div>                           
     </div>
    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"> integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script type="text/javascript" src="script.js"></script>

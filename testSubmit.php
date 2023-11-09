@@ -1,7 +1,8 @@
 <?php
 session_start();
 include 'db.php';
- 
+header('Content-Type: application/json'); 
+
 if(isset($_POST)){
   $data = file_get_contents("php://input");
   $result = json_decode($data, true);
@@ -21,7 +22,13 @@ if ($conn->query($sql) === TRUE) {
 } else {
   echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
 }
+
+$username = "SELECT name FROM stats ORDER BY id DESC LIMIT 1";
+$result = $conn->query($username);
+$name = strval($_SESSION['username']);
+
+echo $name;
+$conn->close();
 
 ?>

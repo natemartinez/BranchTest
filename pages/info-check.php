@@ -10,8 +10,8 @@
  if ($result == TRUE) {
    if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()){
-       $playername = $row["name"]; 
-       $password = $row["password"]; 
+       $playername = $row["name"];
+       $password = $row["password"];
        $mindTrait = $row["mind"];
        $socialTrait = $row["social"];
        $wakeTrait = $row["wake"];

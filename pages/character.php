@@ -129,39 +129,39 @@ $conn->close();
     
             <div>
               <form action="/action_page.php">
-              <label for="str-stat"><h3>Strength:</h3></label>
+              <label for="strength"><h3>Strength:</h3></label>
                <p id='str-stat'><?php echo $strength; ?></p>
               </form>
             </div>    
             <div>
                <form action="/action_page.php">
-                <label for="wp-stat"><h3>Willpower:</h3></label>
+                <label for="willpower"><h3>Willpower:</h3></label>
                 <p id='wp-stat'><?php echo $willpower; ?></p>
                </form>
             </div>
             <div>
   
               <form action="/action_page.php">
-               <label for="tech-stat"><h3>Technique:</h3></label>
+               <label for="technique"><h3>Technique:</h3></label>
                <p id='tech-stat'><?php echo $technique; ?></p>
               </form>
             </div>
             <div>
               
               <form action="/action_page.php">
-                <label for="agi-stat"><h3>Agility:</h3></label>
+                <label for="agility"><h3>Agility:</h3></label>
                 <p id='agi-stat'><?php echo $agility; ?></p>
               </form>                     
             </div>
             <div>
                <form action="/action_page.php">
-                <label for="int-stat"><h3>Intuition:</h3></label>
+                <label for="intuition"><h3>Intuition:</h3></label>
                 <p id='int-stat'><?php echo $intuition; ?></p>
                </form>               
             </div>
             <div>
               <form action="/action_page.php">
-               <label for="per-stat"><h3>Perception:</h3></label>
+               <label for="perception"><h3>Perception:</h3></label>
                <p id='per-stat'><?php echo $perception; ?></p>
               </form>
             </div>

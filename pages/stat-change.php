@@ -10,6 +10,7 @@ $name = strval($_SESSION['username']);
   $data = file_get_contents("php://input");
   $statChange = json_decode($data, true);
 
+  
   $strStat = var_export($statChange['Strength'], 1);
   $wpStat = var_export($statChange['Willpower'], 1);
   $techStat = var_export($statChange['Technique'], 1);
