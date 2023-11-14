@@ -11,9 +11,9 @@ if ($result2 == TRUE) {
    $row = $result2 -> fetch_assoc();
 
    $stats = array(
-    "Level" => $row['level'],
-    "HP" => $row['health'],
-    "SP" => $row['stamina'],
+    "level" => $row['level'],
+    "hp" => $row['health'],
+    "sp" => $row['stamina'],
     "Mind" => $row['mind'],
     "Social" => $row['social'],
     "Wake" => $row['wake'],

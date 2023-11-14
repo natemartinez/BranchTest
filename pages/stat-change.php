@@ -10,31 +10,36 @@ $name = strval($_SESSION['username']);
   $data = file_get_contents("php://input");
   $statChange = json_decode($data, true);
 
-  
-  $strStat = var_export($statChange['Strength'], 1);
-  $wpStat = var_export($statChange['Willpower'], 1);
-  $techStat = var_export($statChange['Technique'], 1);
-  $agiStat = var_export($statChange['Agility'], 1);
-  $perStat = var_export($statChange['Perception'], 1);
-  $intStat = var_export($statChange['Intuition'], 1);
+  $lvlStat = var_export($statChange['level'], 1);
+  $hpStat = var_export($statChange['hp'], 1);
+  $spStat = var_export($statChange['sp'], 1);
+  $strStat = var_export($statChange['str'], 1);
+  $wpStat = var_export($statChange['wp'], 1);
+  $techStat = var_export($statChange['tech'], 1);
+  $agiStat = var_export($statChange['agi'], 1);
+  $perStat = var_export($statChange['per'], 1);
+  $intStat = var_export($statChange['int'], 1);
 
- $sql = "UPDATE stats 
-        SET strength=$strStat,
-            willpower=$wpStat,
-            technique=$techStat,
-            agility=$agiStat,
-            perception=$perStat,
-            intuition=$intStat
-        WHERE name = '$name'"; //'nate' should be a variable that holds the current user's name
-                              // to identify what user should have their stats changed
-        
 
-  if($conn->query($sql) === TRUE) {
-   echo "Stats updated";
-   }else{
-     echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-   
+  $sql = "UPDATE stats 
+     SET level = $lvlStat,
+        health = $hpStat,
+        stamina = $spStat,
+        strength = $strStat,
+        willpower = $wpStat,
+        technique = $techStat,
+        agility = $agiStat,
+        perception = $perStat,
+        intuition = $intStat
+    WHERE name = '$name'"; //'nate' should be a variable that holds the current user's name
+                          // to identify what user should have their stats changed
+    
+   if($conn->query($sql) === TRUE) {
+    echo 'User stats updated';
+    }else{
+      echo "Error: " . $sql . "<br>" . $conn->error;
+   }
+      
 }
 
 ?>

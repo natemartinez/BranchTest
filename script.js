@@ -1,3 +1,34 @@
+window.onload = loadProgress;
+
+function loadProgress(){
+    startBtn.toggleClass('disappear active');
+
+     fetch('pages/load.php',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+     })
+    .then(data => {
+        let userData = JSON.parse(data);
+        let stageNum = parseFloat(userData.stageNum, 10);
+        // use stageNum to find the level based on the stage property
+        let currentStage = Levels.find(level => level.stage === stageNum);
+        setChoices(currentStage, userData);
+     })
+    .catch(error => {
+        console.error('Fetch error:', error);
+     });
+    
+}
+
+
 // load.php functionality
 $('#register').click(function(){
     $('.load-btn').toggleClass('load-btn-out load-btn');
@@ -21,14 +52,12 @@ $('#signup-link').click(function(){
 });
 
 
-
 $('#open-menu').click(function(){
    $('.main-menu').toggleClass('main-menu-active');
 });
 $('#close-menu').click(function(){
     $('.main-menu').toggleClass('main-menu-active');
-})
-
+});
 // For the character.php page functionality(front-end)
 
 $('#bio-link').click(function(){
@@ -246,7 +275,7 @@ function sendResults(stats){
 
 /* functions for displaying stats & test results */
 let userID = {};
-console.log(userID);
+
 function receiveJSON(){
   fetch('pages/info-check.php')
   .then(response => response.json())
@@ -265,10 +294,31 @@ function receiveJSON(){
     console.error('Error:', error);
   });
 };
-receiveJSON(); // Allows us to use userID values
+function receiveDNA(){
+  fetch('info-check.php')
+  .then(response => response.json())
+  .then(data => {
+    userID = {
+        "name": data.name,
+        "password": data.password,
+        "Mind": data.mind,
+        "Social": data.social,
+        "Temper": data.temper,
+        "Wake": data.wake,
+    }
+    resultStart(userID);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+
+receiveJSON(); 
+// Allows us to use userID values
+receiveDNA();
 
 function resultStart(stats){ //This function initializes stats for user         
-     
+    
     let strStat = 0;
     let wpStat = 0;
     let techStat = 0;
@@ -318,15 +368,20 @@ function resultStart(stats){ //This function initializes stats for user
             agiStat++;
          break;
     }
+    
 
 
     const intStats = {
-     "Strength": strStat,
-     "Willpower": wpStat,
-     "Technique": techStat,
-     "Agility": agiStat,
-     "Perception": perStat,
-     "Intuition": intStat,
+     "stage": 1.1,
+     "level": 1,
+     "hp": 50, // In the future, health will be determined by willpower
+     "sp": 30,// In the future, stamina will be determined by agility
+     "str": strStat,
+     "wp": wpStat,
+     "tech": techStat,
+     "agi": agiStat,
+     "per": perStat,
+     "int": intStat,
     }
 
     const sendStatChange = {
@@ -377,15 +432,15 @@ const MedKit = new Item('Med-Kit', 'Support','Health','Common');
 
 const Baddie = new Enemy('Baddie', 1, {attack:5,health:20}, 'images/dabber.png');
 class BattleEvent{
-    constructor(level,type, enemies){
-        this.level = level;
+    constructor(stage, type, enemies){
+        this.stage = stage;
         this.type = type;
         this.enemies = enemies;
     } 
 }
 class SearchEvent{
-    constructor(level, type, collectList, choices){
-        this.level = level;
+    constructor(stage, type, collectList, choices){
+        this.stage = stage;
         this.type = type;
         this.collect = collectList;
         this.choices = choices;
@@ -507,62 +562,55 @@ attackBtn.click(function(){
     
 });
 
-saveBtn.click(function(){
-    saveProgress();
-
-});
+function receiveStats(){
+    fetch('receiveStats.php')
+       .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+       })
+       .then(data => {
+           // I need to be able to use the data outside of here
+           // what if I use a function
+           setChoices(Levels[a], data);
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       }); 
+}
 
 function saveProgress(event, userData){
-    // turn userData to JSON and then send to PHP
-    console.log(event, userData);
-
-     fetch('save.php',{
+    // any updates that the combat and choiceResult must be sent
+    const data = {
+        stats: userData,
+        stageInfo: event
+    };
+    console.log(data);
+    const sendStatChange = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(event, userData),
-    })
-    .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-     })
-    .then(data => {
-        console.log(data);
-     })
-    .catch(error => {
-        console.error('Fetch error:', error);
-     });
-}
-function loadProgress(event, userData){
-    // configure the get request in this function
-    
-    console.log(event, userData);
+        body: JSON.stringify(data)
+    };
 
-     fetch('load.php',{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(event, userData),
-    })
-    .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-     })
+   fetch('pages/save.php', sendStatChange)
+    .then(response => response.text())
     .then(data => {
-        console.log(data);
-     })
+      console.log(data);
+    })
     .catch(error => {
-        console.error('Fetch error:', error);
-     });
+      console.error('Error:', error);
+    });
 }
+
 
 function setChoices(event, userData){
+   if(userData == null){
+    console.log('user data is null');
+   }
+
    saveProgress(event, userData);
    userProgress = userData;
 
@@ -606,9 +654,7 @@ function setChoices(event, userData){
    };
 };
 
-function update(){
 
-}
 
 function displayChoices(choices){
     // Select the elements' id that will be used to displayed 
