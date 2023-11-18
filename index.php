@@ -2,7 +2,25 @@
 include 'db.php';
 session_start();
 
-//echo $allStats;
+// receive stats from signin user
+$name = $_SESSION['name'];
+
+$allStats = "SELECT * FROM stats WHERE name = '$name'";
+
+$result2 = $conn->query($allStats);
+
+ if ($result2 == TRUE) {
+   if ($result2->num_rows > 0) {
+    $row = $result2->fetch_assoc();
+    $hp = $row['health'];
+    $sp = $row['stamina'];
+   }else {
+     echo "No records found with ID: $id";
+   }
+ }else{
+   echo "Error";
+ };
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +33,9 @@ session_start();
     <title>CYOA</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   
     <!-- Font Awesome JS -->
@@ -28,9 +49,11 @@ session_start();
         <img id='level-circle' src="icons/level-circle.png" alt="black circle">
         <p>1</p>
        </div>
-      
-       <p>HP</p>
-       <p>SP</p>
+       <div id='user-vitals'>
+        <p id='hp-stat'>HP: <?php echo $hp;?></p>
+        <p id='sp-stat'>SP: <?php echo $sp;?></p>
+       </div>
+       
    </div>
 
     <button class='active' id='start-btn'>Start</button>

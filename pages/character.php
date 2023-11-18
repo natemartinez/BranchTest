@@ -27,6 +27,7 @@ $result2 = $conn->query($allStats);
  if ($result2 == TRUE) {
    if ($result2->num_rows > 0) {
     $row = $result2->fetch_assoc();
+    $level = $row['level'];
     $strength = $row['strength'];
     $willpower = $row['willpower'];
     $technique = $row['technique'];
@@ -54,6 +55,11 @@ $conn->close();
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="menu-styles/character.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap" rel="stylesheet">
   
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -80,12 +86,13 @@ $conn->close();
           <div id='bio-stats'>
             <div>
              <p>Name: <?php echo $_SESSION['username']; ?></p>
-             <p>Level:</p>
+             <p>Level: <?php echo $level; ?></p>
             </div>      
           </div>
 
-          <div id='bio-history'>
-            <h2 class='text-center'>History</h2>
+          <div id='bio-btns'>
+            <button id='inv-link'><a href="inventory.php">Inventory</a></button>
+            <button id='skills-link'><a href="skills.php">Skills</a></button>
           </div>
         </div>
         <div class='char-content content-deactive' id='dna-content'>
@@ -95,30 +102,30 @@ $conn->close();
           <div id='brain-div'>
             <img id='brain' src="../images/demo-brain.png" alt="top view of brain">
             <div id='brain-title'>
-             <p>Logical</p>
-             <p>Creative</p> 
+             <p id='logical-title'>Logical</p>
+             <p id='creative-title'>Creative</p> 
             </div>    
           </div>     
 
           <div id='dna-stats'>
             <div class='dna-div' id='left-div'>
               <img class='social-img' id='intro-img' src="../images/introvert.png" alt="">  
-              <p>Introverted</p>
+              <p id='introvert-title'>Introverted</p>
               <img class='wake-img' id='earlybird-img' src="../images/earlybird.png" alt="">
-              <p>Early Bird</p>
+              <p id='earlyB-title'>Early Bird</p>
               
               <img class='temp-img' id='snowflake-img' src="../images/snowflake.png" alt="">
-              <p>Cold-blooded</p>              
+              <p id='coldB-title'>Cold-blooded</p>              
             </div>
             <div class='dna-div' id='right-div'>
               <img class='social-img' id='extro-img' src="../images/extrovert.png" alt=""> 
-              <p>Extroverted</p>
+              <p id='extro-title'>Extroverted</p>
             
               <img class='wake-img' id='nightowl-img' src="../images/nightowl.png" alt="">              
-              <p>Night Owl</p>
+              <p id='nightO-title'>Night Owl</p>
 
               <img class='temp-img' id='flame-img' src="../images/flame.png" alt="">
-              <p>Hot-headed</p>              
+              <p id='hotH-title'>Hot-headed</p>              
                          
             </div>
           </div>

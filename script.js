@@ -61,16 +61,22 @@ $('#close-menu').click(function(){
 // For the character.php page functionality(front-end)
 
 $('#bio-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#bio-btn').addClass('clicked');
     $('#bio-content').removeClass('content-deactive');
     $('#dna-content').addClass('content-deactive');
     $('#stats-content').addClass('content-deactive');
 });
 $('#dna-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#dna-btn').addClass('clicked');
     $('#dna-content').removeClass('content-deactive');
     $('#bio-content').addClass('content-deactive');
     $('#stats-content').addClass('content-deactive');
 });
 $('#stats-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#stats-btn').addClass('clicked');
     $('#stats-content').removeClass('content-deactive');
     $('#dna-content').addClass('content-deactive');
     $('#bio-content').addClass('content-deactive');
@@ -201,39 +207,47 @@ dnaBtn.click(function(){
     switch(userID.Mind){
         case "Logical":
          brainImg.attr('src', '../images/left-brain.png');
+         $('#creative-title').css('opacity', '40%');
          break;
         case "Creative":
          brainImg.attr('src', '../images/right-brain.png');
+         $('#logical-title').css('opacity', '40%');
          break;
     }
     switch(userID.Social){
         case "Introvert":
          introSide.css('width', '7em');
          extroSide.css('opacity', '40%');
+         $('#extro-title').css('opacity', '40%');
          break;
         case "Extrovert":
          extroSide.css('width', '7em');
          introSide.css('opacity', '40%');
+         $('#intro-title').css('opacity', '40%');
          break;
     }
     switch(userID.Wake){
         case "Early Bird":
             earlyBird.css('width', '8em');
             nightOwl.css('opacity', '20%');
+            $('#nightO-title').css('opacity', '40%'); 
          break;
         case "Night Owl":
             nightOwl.css('width', '7em');
             earlyBird.css('opacity', '40%');
+            $('#earlyB-title').css('opacity', '40%');
          break;
     }
     switch(userID.Temper){
         case "Hot-headed":
             hotHead.css('width', '8em');
             coldBlood.css('opacity', '20%');
+            $('#coldB-title').css('opacity', '40%');
          break;
         case "Cold-blooded":
             coldBlood.css('width', '7em');
             hotHead.css('opacity', '40%');
+            $('#hotH-title').css('opacity', '40%');
          break;
     }
 
@@ -738,7 +752,7 @@ function combatStart(currentStage, userData){
     const enemyInfoBox = $('.enemy-div');
 
    for(let i=0;i<enemies.length;i++){
-    const enemyInfo = "<div class='enemy-info'><img src='" + enemies[i].img + "' class='enemy-img' '><div><p id='enemy-name-" +
+    const enemyInfo = "<div class='enemy-info'><img src='" + enemies[i].img + "' class='enemy-img' '><div id='enemy-text'><p id='enemy-name-" +
      [i] + "'></p><br><p id='enemy-lvl-" + [i] + "'></p><br><p id='enemy-hp-" + [i] + "'></p></div></div>";
     enemyInfoBox.append(enemyInfo);
    }

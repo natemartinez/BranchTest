@@ -1,9 +1,15 @@
+body{
+    background-color: #f7e0c1;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 400;
+}
+
+
 #char-menu{
     display: flex;
     column-gap: 0.5em;
     align-items: center;
     justify-content: center;
-    background-color:#495057;
 }
 #back-arrow{
     width: 3em;
@@ -11,13 +17,22 @@
     margin-right: 0.5em;
 }
 .char-links button{
-    width: 3.2em;
+    width: 3.3em;
     height: 2.5em;
-    background-color: midnightblue;
-    border: 1px solid midnightblue;
+    background-color: #392f2f;
+    border: 1px solid #392f2f;
     font-size: 2em;
     color: white;
 }
+.char-links button:focus{
+    outline: none;
+}
+.clicked{
+    background-color: #8e8585!important;
+    color: #392f2f!important;
+    border: 1px solid #8e8585!important;
+}
+
 
 .content-deactive{
     display: none !important;
@@ -31,20 +46,42 @@
     justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: center;
+    margin-top: 4em;
 }
 #bio-stats{
     display: inline-flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    font-size: 1.5em;
 }
 #bio-stats p{
     font-size: 2em;
 }
-#bio-history{
-    width: 100%;
-    border: 3px solid black;
-    height: 35em;
-    margin-top: 5em;
+#bio-btns{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2em;
+    width: 10em;
+    margin-top: 2em;
+}
+#inv-link{
+    margin-bottom: 2em;
+    height: 3em;
+    border-radius: 10px;
+    background-color: #392f2f;
+    border: 1px solid #392f2f;
+    color: white;
+}
+#inv-link a{
+    color: white;
+}
+#skills-link{
+    height: 3em;
+    border-radius: 10px;
+    background-color: #392f2f;
+    border: 1px solid #392f2f;
 }
 
 #profile{
@@ -58,7 +95,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-weight: 500;
+    font-weight: 600;
+}
+#dna-content p{
+    font-size: 1.4em;
 }
 .dna-div{
     display: flex;

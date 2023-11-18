@@ -13,8 +13,8 @@ a:hover{
 .hud-menu{
     display: flex;
     column-gap: 1em;
+    justify-content: space-between;
 }
-
 .hud-div{
         display: flex;
         flex-direction: row;
@@ -23,6 +23,20 @@ a:hover{
 .hud-img{
     width: 1.5em;
     margin-right: 0.5em;
+}
+#hp-stat{
+    color: rgb(193, 54, 54);
+}
+#sp-stat{
+    color: rgb(35, 88, 211);
+}
+#user-vitals{
+    display: flex;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+#user-vitals p{
+    margin-right: 2em;
 }
 
 #level-circle{
@@ -261,13 +275,19 @@ a:hover{
     display: flex;
     flex-direction: row;
     text-align: center;
+    color: black;
 }
 .enemy-info{
     display: flex;
     flex-direction: column;
+    font-size: 1.3em;
+    font-weight: 500;
 }
 .enemy-img{
     width: 5em;
+}
+.enemy-text p{
+    margin-bottom: 0em;
 }
 
 .choices{
