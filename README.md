@@ -1,21 +1,21 @@
 ### BranchTest: Personality-based Interactive Fiction RPG
 
-## Overview
+## Overview:
 BranchTest combines basic RPG elements with the player’s personality based on the Myers-Briggs Personality Test. The game asks players personality questions, and the user’s stats will be given based on their answers. 
 The player’s stats affect game elements, such as decision outcome, strength in combat, obtaining skills, building relationships, etc.
 
-## Genre
+## Genre:
 This game's genre is an interactive fiction RPG.  
 Unlike most games that require the player to move in order to progress, the player must make choices to progress through levels.
 
-## Features
+## Features:
 - RPG turn-based combat (Pokemon, Final Fantasy)
 - Signup & Login Authentication
 - Auto-saving & Loading when logged in
 - Various skills, items, builds, and personality
 - Success & Failure outcome based on random chance, probability is influenced by personality
 
-## Main Objective
+## Main Objective:
 The main objective is for players to adapt and mold their personality as the game progresses. 
 As new choices are made, new branches are formed in the pursuit of finding the “root” of it all.
 
@@ -36,15 +36,15 @@ For example, a person who is **extroverted** will have a higher chance of succes
 In the **Combat** phase, each personality has different attack options available to them. 
 Each attack has unique abilities to give you an edge on the battlefield. Some attacks are based on **luck**, **turns**, **consecutive hits**, and even **healing**. 
 
-## Objects
+## Objects:
 The different objects that users find will also have an **impact** on the game’s progression.  
 Certain items allow the user to have **more options**, **stronger stats**, **open new levels**, and **gift to companions**.
 
-## Progress
+## Progress:
 BranchTest uses **auto-saving** whenever the player progresses through each level.
 Once the player logs in with their information, it will **start where they left off**.
 
-## Future Developments
+## Future Developments:
 - A backstory with plot, characters, dialogue, and detailed levels
 - Make archetype questions more detailed and advanced
 - Skills for the players to obtain
