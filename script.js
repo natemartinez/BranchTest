@@ -1,33 +1,426 @@
-/*
-    NOTES:
-    - create class of events
-    - create instances of those events - battle & search
-      - What are the properties?
-      TYPE, RESULT, CHANCE
-      - How will these properties affect the outcome?
-      and how do we get different properties based on input and data.
-      For example, how do we determine what result will happen and how is the 
-      chance of that choice coming out 
-      - How will game move over to next level?
-      IDEA: Maybe an array?
-    
-      PRIORITY:
-      - Choices
-      - Battle
-      - Collecting items
+window.onload = loadProgress;
 
-*/
+function loadProgress(){
+    startBtn.toggleClass('disappear active');
 
-// Must receive stats from test or database using fetch()
-// The keys must be strings
-let userStats = {
+     fetch('pages/load.php',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+     })
+    .then(data => {
+        let userData = JSON.parse(data);
+        let stageNum = parseFloat(userData.stageNum, 10);
+        // use stageNum to find the level based on the stage property
+        let currentStage = Levels.find(level => level.stage === stageNum);
+        setChoices(currentStage, userData);
+     })
+    .catch(error => {
+        console.error('Fetch error:', error);
+     });
     
-    'str': 2,
-    'per': 1,
-    'agi': 3
+}
+
+
+// load.php functionality
+$('#register').click(function(){
+    $('.load-btn').toggleClass('load-btn-out load-btn');
+    $('.signup-form-0').toggleClass('signup-form-1 signup-form-0');
+    $('.load-menu').toggleClass('load-menu-out load-menu')
+});
+$('#login').click(function(){
+    $('.load-btn').toggleClass('load-btn-out load-btn');
+    $('.login-form-0').toggleClass('login-form-1 login-form-0');
+    $('.load-menu').toggleClass('load-menu-out load-menu');
+});
+$('#login-link').click(function(){
+    $('.signup-form-1').toggleClass('signup-form-0 signup-form-1');
+    $('.login-form-0').toggleClass('login-form-1 login-form-0');
+    $('.load-menu').toggleClass('load-menu-out load-menu');
+});
+$('#signup-link').click(function(){
+    $('.signup-form-0').toggleClass('signup-form-1 signup-form-0');
+    $('.login-form-1').toggleClass('login-form-0 login-form-1');
+    $('.load-menu').toggleClass('load-menu-out load-menu')
+});
+
+
+$('#open-menu').click(function(){
+   $('.main-menu').toggleClass('main-menu-active');
+});
+$('#close-menu').click(function(){
+    $('.main-menu').toggleClass('main-menu-active');
+});
+// For the character.php page functionality(front-end)
+
+$('#bio-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#bio-btn').addClass('clicked');
+    $('#bio-content').removeClass('content-deactive');
+    $('#dna-content').addClass('content-deactive');
+    $('#stats-content').addClass('content-deactive');
+});
+$('#dna-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#dna-btn').addClass('clicked');
+    $('#dna-content').removeClass('content-deactive');
+    $('#bio-content').addClass('content-deactive');
+    $('#stats-content').addClass('content-deactive');
+});
+$('#stats-link').click(function(){
+    $('.char-links button').removeClass('clicked');
+    $('#stats-btn').addClass('clicked');
+    $('#stats-content').removeClass('content-deactive');
+    $('#dna-content').addClass('content-deactive');
+    $('#bio-content').addClass('content-deactive');
+});
+
+// Character test to determine identity 
+let mainText = $('#main-text');
+
+let hemisphereTrait = ''; // left/right-brained
+let socialTrait = ''; //intro/extro-verted
+let wakeTrait = ''; //earlyBird/nightOwl
+let temperTrait = '';//hotHeaded/coldBlooded
+
+let testButton1 = $('#choice1');
+let testButton2 = $('#choice2');
+let nextButton = $('#next-btn');
+let backButton = $('#back-btn');
+let beginButton = $('#begin-btn');
+let submitButton = $('#submit-btn');
+let dnaBtn = $("#dna-btn");
+
+let questions = [
+    "Are you Logical or Creative?",
+    "Are you Introverted or Extroverted?",
+    "Do you prefer to wake up early or stay up later?",
+    "What would you say your temper is like?"
+];
+let traits = [
+    'Logical','Creative',
+    'Introvert','Extrovert', 
+    'Early Bird','Night Owl',
+    'Hot-headed','Cold-blooded' 
+];
+
+let answer = [];
+let choiceSelect = false; // checks if button was selected
+let choice = ''; // Holds to chosen value
+
+let i = 0;
+
+let x = 0; // Variables will be used to
+let y = 1; // give choice buttons their names with iteration
+
+testButton1.click(function(){
+    choice = testButton1.text();
+    choiceSelect = true;
+    
+});
+testButton2.click(function(){
+    choice = testButton2.text();
+    choiceSelect = true;
+});
+
+beginButton.click(function(){
+    let textBox = $('#name-input');
+    const nameInput = $('#name-input').val();
+    
+    textBox.css('display', 'none');
+    beginButton.css('display', 'none');
+    nextButton.css('display', 'unset');
+    backButton.css('display', 'unset');
+
+    testButton1.css('display', 'unset');
+    testButton1.text(traits[x]);
+    testButton2.css('display', 'unset');
+    testButton2.text(traits[y]);
+    
+    mainText.text(questions[i]);
+    answer.push(nameInput);
+});
+
+nextButton.click(function(){
+    if(choiceSelect){
+        answer.push(choice);
+        choiceSelect = false;
+    } else{
+        alert('you must select a choice');
+        return
+    }
+
+    x = x + 2;
+    y = y + 2;
+    i += 1; 
+
+    mainText.text(questions[i]);
+    testButton1.text(traits[x]);
+    testButton2.text(traits[y]);
+
+    if(i == 4){
+       mainText.text("Your result is complete");
+       nextButton.css('display', 'none');
+       backButton.css('display', 'none');
+       testButton1.css('display', 'none');
+       testButton2.css('display', 'none');
+       submitButton.css('display', 'unset');
+    }
+});
+
+backButton.click(function(){
+    i -= 1;
+    x = x - 2;
+    y = y - 2;
+
+    mainText.text(questions[i]);
+    testButton1.text(traits[x]);
+    testButton2.text(traits[y]);
+});
+
+submitButton.click(function(e){
+    e.preventDefault();
+    sendResults(answer);
+    location.href = "pages/character.php";
+});
+
+dnaBtn.click(function(){
+    // This function will receive the JSON to affect the styling
+    // of the elements
+    let brainImg = $('#brain');
+    let introSide = $('#intro-img');
+    let extroSide = $('#extro-img');
+    let earlyBird = $('#earlybird-img');
+    let nightOwl = $('#nightowl-img');
+    let coldBlood = $('#snowflake-img');
+    let hotHead = $('#flame-img');
+    
+    // raise scale of chosen stats 
+    // and lower opacity of other
+    switch(userID.Mind){
+        case "Logical":
+         brainImg.attr('src', '../images/left-brain.png');
+         $('#creative-title').css('opacity', '40%');
+         break;
+        case "Creative":
+         brainImg.attr('src', '../images/right-brain.png');
+         $('#logical-title').css('opacity', '40%');
+         break;
+    }
+    switch(userID.Social){
+        case "Introvert":
+         introSide.css('width', '7em');
+         extroSide.css('opacity', '40%');
+         $('#extro-title').css('opacity', '40%');
+         break;
+        case "Extrovert":
+         extroSide.css('width', '7em');
+         introSide.css('opacity', '40%');
+         $('#intro-title').css('opacity', '40%');
+         break;
+    }
+    switch(userID.Wake){
+        case "Early Bird":
+            earlyBird.css('width', '8em');
+            nightOwl.css('opacity', '20%');
+            $('#nightO-title').css('opacity', '40%'); 
+         break;
+        case "Night Owl":
+            nightOwl.css('width', '7em');
+            earlyBird.css('opacity', '40%');
+            $('#earlyB-title').css('opacity', '40%');
+         break;
+    }
+    switch(userID.Temper){
+        case "Hot-headed":
+            hotHead.css('width', '8em');
+            coldBlood.css('opacity', '20%');
+            $('#coldB-title').css('opacity', '40%');
+         break;
+        case "Cold-blooded":
+            coldBlood.css('width', '7em');
+            hotHead.css('opacity', '40%');
+            $('#hotH-title').css('opacity', '40%');
+         break;
+    }
+
+});
+
+// Inventory page
+let itemSlot = $('.item');
+
+itemSlot.click(function(e){
+    //grabs info based on id in the slot
+    e.preventDefault();
+    let itemID = $(this).attr('id');
+    let savedInventory = JSON.parse(sessionStorage.getItem('inventory'));
+    
+    $('#info-name').text(savedInventory[itemID].name);
+    $('#info-type').text(savedInventory[itemID].type);
+    $('#info-rarity').text(savedInventory[itemID].rarity);
+})
+
+function sendResults(stats){
+    console.log(stats);
+    let result = {
+       "name": stats[0],
+       "password": stats[1],
+       "mind": stats[1],
+       "social": stats[2],
+       "wake": stats[3],
+       "temper": stats[4],
+    };
+
+    $.post("testSubmit.php", JSON.stringify(result), function(data){
+        let identity = data;
+        console.log(identity);
+    }, "text")
+    .done(function(){
+        console.log("request done")
+    })
 };
-  // This object will hold the current event(Battle, Search)
-class Enemy{
+
+/* functions for displaying stats & test results */
+let userID = {};
+
+function receiveJSON(){
+  fetch('pages/info-check.php')
+  .then(response => response.json())
+  .then(data => {
+    userID = {
+        "Name": data.name,
+        "password": data.password,
+        "Mind": data.mind,
+        "Social": data.social,
+        "Temper": data.temper,
+        "Wake": data.wake,
+    }
+    resultStart(userID);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+function receiveDNA(){
+  fetch('info-check.php')
+  .then(response => response.json())
+  .then(data => {
+    userID = {
+        "name": data.name,
+        "password": data.password,
+        "Mind": data.mind,
+        "Social": data.social,
+        "Temper": data.temper,
+        "Wake": data.wake,
+    }
+    resultStart(userID);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+
+receiveJSON(); 
+// Allows us to use userID values
+receiveDNA();
+
+function resultStart(stats){ //This function initializes stats for user         
+    
+    let strStat = 0;
+    let wpStat = 0;
+    let techStat = 0;
+    let agiStat = 0;
+    let perStat = 0;
+    let intStat = 0;
+   
+    switch(stats.Mind){
+        case "Logical":
+         perStat++;
+         intStat++;
+         break;
+        case "Creative":
+         techStat++;
+         wpStat++;
+         break;
+    }
+    switch(stats.Social){
+        case "Introvert":
+            perStat++;
+            techStat++;
+            intStat++;
+         break;
+        case "Extrovert":
+            strStat++;
+            wpStat++;
+            agiStat++;
+         break;
+    }
+    switch(stats.Wake){
+        case "Early Bird":
+            strStat++;
+            intStat++;
+         break;
+        case "Night Owl":
+            wpStat++;
+            perStat++;
+         break;
+    }
+    switch(stats.Temper){
+        case "Hot-headed":
+            strStat++;
+            wpStat++;  
+         break;
+        case "Cold-blooded":
+            techStat++;
+            agiStat++;
+         break;
+    }
+    
+
+
+    const intStats = {
+     "stage": 1.1,
+     "level": 1,
+     "hp": 50, // In the future, health will be determined by willpower
+     "sp": 30,// In the future, stamina will be determined by agility
+     "str": strStat,
+     "wp": wpStat,
+     "tech": techStat,
+     "agi": agiStat,
+     "per": perStat,
+     "int": intStat,
+    }
+
+    const sendStatChange = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(intStats)
+    };
+
+   fetch('pages/stat-change.php', sendStatChange)
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    //Send stats to another function
+
+}
+// Actual gameplay
+// Must receive stats from test or database using fetch()
+// This object will hold the current event(Battle, Search)
+class Enemy {
     constructor(name, level, stats, img){
         this.name = name;
         this.level = level;
@@ -52,17 +445,17 @@ const Shirt = new Item('Shirt','Gear','Armor','Common');
 const MedKit = new Item('Med-Kit', 'Support','Health','Common');
 
 const Baddie = new Enemy('Baddie', 1, {attack:5,health:20}, 'images/dabber.png');
-
 class BattleEvent{
-    constructor(type, level, enemies){
+    constructor(stage, type, enemies){
+        this.stage = stage;
         this.type = type;
-        this.level = level;
         this.enemies = enemies;
     } 
 }
 class SearchEvent{
-    constructor(level, collectList, choices){
-        this.level = level;
+    constructor(stage, type, collectList, choices){
+        this.stage = stage;
+        this.type = type;
         this.collect = collectList;
         this.choices = choices;
     } 
@@ -71,47 +464,45 @@ class SearchEvent{
     // choices will be iterated to be displayed
 }
 
-const LevelOneBattle = new BattleEvent('battle','1.1',[Baddie, Baddie]);
-
-//Every action has properties that determine:
-// - What it will do
-// - What type of action it is
-// - The difficulty of action
-const LevelOneSearch = new SearchEvent(1.1, [Dice, Stick, Shirt, MedKit],
+const LevelOneSearch = new SearchEvent(1.1, 'search' , [Dice, Stick, Shirt, MedKit],
                                     [{action:'Closet', type:'str', diff:1},
                                       {action: 'Bed', type:'agi', diff:1},
                                       {action:'Curtains',type:'per', diff:1},
                                       {action: 'Rug', type:'per', diff:1}]);
 
+                                      
+const LevelOneBattle = new BattleEvent(1.2, 'battle',[Baddie, Baddie]);
+
 const Levels = [LevelOneSearch, LevelOneBattle];
 
-// Use Levels[] to save on LocalStorage
 
+/* BUTTONS */
 const startBtn = $('#start-btn');
 const choiceDiv = $('.choice-div');
 const choiceBtn = $('.choice-btn');
-const submitBtn = $('#submit-btn');
+const acceptBtn = $('#accept-btn');
 const continueBtn = $('#cont-btn');
 const moveBtn = $('#move-btn');
+const saveBtn = $('#save-btn');
 const noBtn = $('#no-btn');
 const yesBtn = $('#yes-btn');
-//
+const attackBtn = $('#attack-btn');
+
 
 //This function will trigger choices for battle and searching
 // Have to find a way to set these choices automatically
-let i = 0;
-
+let a = 0;
 let chosenChoice = '';
 let currentChoices = [];
+let userProgress = '';
 
+/* BUTTONS' FUNCTIONS */
 choiceBtn.click(function(){
-    submitBtn.addClass('active');
-    submitBtn.removeClass('disappear');
+    acceptBtn.addClass('active');
+    acceptBtn.removeClass('disappear');
     let selectedChoice = $(this).text();
     chosenChoice = selectedChoice;
-
     // if the button clicked is the 'move-on', then hide the submit button
-    
     // if element has not-clicked, then just change that specific element
     // change the rest to clicked
     if($(this).hasClass('not-clicked')){
@@ -119,34 +510,49 @@ choiceBtn.click(function(){
       $(this).siblings('.choice-btn').removeClass('clicked');  
       $(this).siblings('.choice-btn').addClass('not-clicked');  
     };
-    
     // Activate animation that shows an annoucement of the probability and result
     // if choice succeeds
 });
 startBtn.click(function(){
 // This button's function will iterate through the levels one at a time
 // For now, I just want to return each event one at a time
-   setChoices(Levels[i]);
-   i++;
+    
+       fetch('receiveStats.php')
+       .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+       })
+       .then(data => {
+           // I need to be able to use the data outside of here
+           // what if I use a function
+           setChoices(Levels[a], data);
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       }); 
+
+
    $(this).toggleClass('disappear active');
    choiceDiv.toggleClass('active disappear');
 });
-submitBtn.click(function(){
+acceptBtn.click(function(){
     // Removes choice that was clicked, as well as the submit button
     $(this).toggleClass('disappear active');
     continueBtn.toggleClass('active disappear');
-    let i = 0;
+    let a = 0;
     selectChoice(chosenChoice, currentChoices);
     $(this).addClass('disappear');
     $('.clicked').addClass('disappear');
-    i++;
+    a++;
     // create a function that finds the object that matches the button's text
 });
 continueBtn.click(function(){
     $('.result-div').toggleClass('disappear active');
     $(this).toggleClass('disappear active');
     $('.choice-btn').removeClass('no-click')
-})
+});
 moveBtn.click(function(){
      // if the next level is a battle then remove choice-div
     // and add battle-div
@@ -154,37 +560,100 @@ moveBtn.click(function(){
     $('#submit-btn').addClass('disappear');
     $('#submit-btn').removeClass('active');
     $('.move-notice').addClass('active');
-})
+});
 noBtn.click(function(){
     $('.move-notice').removeClass('active');
    
-})
+});
 yesBtn.click(function(){
     $('.move-notice').addClass('disappear');
-    nextEvent(Levels[i]);
-})
 
-function setChoices(event){
-   let curChoices = Object.keys(event.choices).length; 
-   let choiceArray = [];
-   for(let i=0; i < curChoices; i++){
-    let userStr = userStats;
-    let choiceDifficulty = event.choices[i].diff;
-    let choiceType = event.choices[i].type;
-    let choiceReward = event.collect[i];
-    let choiceName = event.choices[i].action;
-    // Variables above will be used to determine choice probability
-    let choiceObj = {
-        choiceName:choiceName,
-        type: choiceType,
-        result: choiceReward
+    setChoices(Levels[a], userProgress);
+    // the yes button should only carry levels over
+    // not stats, userProgress shouldnt be here
+});
+attackBtn.click(function(){
+    
+});
+
+function receiveStats(){
+    fetch('receiveStats.php')
+       .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+       })
+       .then(data => {
+           // I need to be able to use the data outside of here
+           // what if I use a function
+           setChoices(Levels[a], data);
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       }); 
+}
+
+function saveProgress(event, userData){
+    // any updates that the combat and choiceResult must be sent
+    const data = {
+        stats: userData,
+        stageInfo: event
+    };
+    console.log(data);
+    const sendStatChange = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     };
 
-    let userCompare = userStr[choiceObj.type];
-    // We use userCompare to know what to select inside userStats
-    
-    // Receives data from choices to add control flow
-    // Turns data into an array of choice objects to be passed into displayChoices()
+   fetch('pages/save.php', sendStatChange)
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+
+function setChoices(event, userData){
+   if(userData == null){
+    console.log('user data is null');
+   }
+
+   saveProgress(event, userData);
+   userProgress = userData;
+
+   if(event.type == 'battle'){
+    // clear out all previous elements off-screen
+    $('.move-notice').addClass('disappear');
+    $('.move-notice').removeClass('active');
+    choiceDiv.addClass('disappear');
+    choiceDiv.removeClass('active');
+    $('.combat-div').addClass('active');
+
+    combatStart(event, userData);
+
+   }else if(event.type == 'search'){
+    let choiceArray = [];
+    for(let i=0; i < event.choices.length; i++){
+      let userStr = userData;
+      let choiceDifficulty = event.choices[i].diff;
+      let choiceType = event.choices[i].type;
+      let choiceReward = event.collect[i];
+      let choiceName = event.choices[i].action;
+      // Variables above will be used to determine choice probability
+      let choiceObj = {
+          choiceName:choiceName,
+          type: choiceType,
+          result: choiceReward
+       };
+
+      let userCompare = userStr[choiceObj.type];
 
       if(choiceDifficulty < userCompare){
             choiceObj.choiceChance = 'easy';
@@ -193,23 +662,13 @@ function setChoices(event){
          choiceObj.choiceChance = 'hard';
          choiceArray.push(choiceObj);
       }
-   }   
-   displayChoices(choiceArray);
-
-/*
-Next Steps: 
-- With choiceInfo, set a randomizer to determine success/failure
-- Once random result is settled, how will result be determined
-*/
-   // output to displayChoices();: Must return with an array of objects
- /* If the event is:
- BATTLE - Start battle(); This function will start a usual battle 
- 
- SEARCH - Start search(); This function will start the next search moment
-                          with new choices
- Regardless of event, we must pass in to displayChoices();
- */
+    }   
+    a++;
+    displayChoices(choiceArray);  
+   };
 };
+
+
 
 function displayChoices(choices){
     // Select the elements' id that will be used to displayed 
@@ -224,13 +683,6 @@ function displayChoices(choices){
       $(choiceText).addClass(difficulty);
       currentChoices.push(choices[i]);
     }
-
-    // How am I going to send choices to choiceResult?
-
-    // Delete choices that were chosen
-    // Use a variable to keep track of the selected choices -- Could probably do that as an event Listener
-    // Each choice will have a probability of success
-    
 };
 
 function selectChoice(selected, choiceArray){
@@ -242,8 +694,7 @@ function selectChoice(selected, choiceArray){
     } else{
         console.log('Not it chief');
     }
- }
-  
+  }
 }
 
 function choiceResult(choiceObj){
@@ -290,33 +741,18 @@ function choiceResult(choiceObj){
     // function that outputs results based on success and fail
     // Success - Save new item into inventory
     // Fail - Nothing
+
+    // update();
 }
 
-function nextEvent(nextLevel){
+function combatStart(currentStage, userData){
+  //  console.log(currentStage, userData);
 
-    // Senses what type of level is next (Search or battle)
-    if(nextLevel.type == 'battle'){
-        // clear out all previous elements off-screen
-        $('.move-notice').addClass('disappear');
-        $('.move-notice').removeClass('active');
-        choiceDiv.addClass('disappear');
-        choiceDiv.removeClass('active');
-        $('.combat-div').addClass('active');
-
-        combatStart(nextLevel);
-
-    }
-}
-
-function combatStart(currentStage){
-    // In the future, put in a alert
     let enemies = currentStage.enemies;
     const enemyInfoBox = $('.enemy-div');
 
-    console.log()
-
    for(let i=0;i<enemies.length;i++){
-    const enemyInfo = "<div class='enemy-info'><img src='" + enemies[i].img + "' class='enemy-img' '><div><p id='enemy-name-" +
+    const enemyInfo = "<div class='enemy-info'><img src='" + enemies[i].img + "' class='enemy-img' '><div id='enemy-text'><p id='enemy-name-" +
      [i] + "'></p><br><p id='enemy-lvl-" + [i] + "'></p><br><p id='enemy-hp-" + [i] + "'></p></div></div>";
     enemyInfoBox.append(enemyInfo);
    }
@@ -332,13 +768,15 @@ function addEnemies(enemyObject){
 
      enemyNameBox.text(enemyObject[i].name);
      enemyLvlBox.text('Level ' + enemyObject[i].level);
-     enemyHpBox.text('HP ' + enemyObject[i].stats.health);
-     
+     enemyHpBox.text('HP ' + enemyObject[i].stats.health) 
      //enemyImgBox.src = 'images/dabbers.png';
    }
    
 }
 
+function attackOptions(userStats){
+    // receive user stats to see what type of options come up
+}
 
 function enemyLogic(enemy){
     // Damage dealt with be in correlation of their attack stat
