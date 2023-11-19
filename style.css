@@ -470,8 +470,9 @@ a:hover{
 }
 #open-menu{
     font-size: 2.5em;
+    color: white;
 }
-#save-btn{
+#logout-btn{
     color: white;
     background: transparent;
     border: none;

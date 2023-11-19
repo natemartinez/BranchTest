@@ -114,7 +114,7 @@ $result2 = $conn->query($allStats);
         <a href="pages/goals.php">Goals</a>
         </div>                           
         <div class='menu-div'>
-          <button id='save-btn' href="pages/settings.php">Save</button>
+          <button id='logout-btn'><a href="test.php">Log out</a></button>
         </div>                           
     </div>
    
