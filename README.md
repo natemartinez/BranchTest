@@ -5,7 +5,7 @@ BranchTest combines basic RPG elements with the player’s personality based on 
 The player’s stats affect game elements, such as decision outcome, strength in combat, obtaining skills, building relationships, etc.
 
 ## Genre
-This game's genre is an interactive fiction RPG.
+This game's genre is an interactive fiction RPG.  
 Unlike most games that require the player to move in order to progress, the player must make choices to progress through levels.
 
 ## Features
