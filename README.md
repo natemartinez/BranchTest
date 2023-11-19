@@ -25,10 +25,10 @@ Once that’s done, players must answer questions that will determine their arch
 This archetype will affect outcomes of the game like probability, combat strength, skill progression, item collection, and many more!
 
 ## Progression:
-The player progresses through the game by making choices of the actions they will take.
+The player progresses through the game by making choices of the actions they will take.  
 There’s two main types of levels, there’s a **Search** phase, and a **Combat** phase. 
 
-In the **Search** phase, you have to choose at least one search action.
+In the **Search** phase, you have to choose at least one search action.  
 The outcome is determined by comparison of the action taken and the user’s stats.  
 For example, a person who is **extroverted** will have a higher chance of success when **talking**, while an **introvert** will have a higher chance for **searching items**. 
 **Health**, **stamina**, **items**, **buffs**, **debuffs**, and **experience** can be gained or lost based on the outcome.
