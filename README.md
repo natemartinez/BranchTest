@@ -1,8 +1,12 @@
-### BranchTest: Personality-based RPG
+### BranchTest: Personality-based Interactive Fiction RPG
 
 ## Overview
 BranchTest combines basic RPG elements with the player’s personality based on the Myers-Briggs Personality Test. The game asks players personality questions, and the user’s stats will be given based on their answers. 
 The player’s stats affect game elements, such as decision outcome, strength in combat, obtaining skills, building relationships, etc.
+
+## Genre
+This game's genre is an interactive fiction RPG.
+Unlike most games that require the player to move in order to progress, the player must make choices to progress through levels.
 
 ## Features
 - RPG turn-based combat (Pokemon, Final Fantasy)
